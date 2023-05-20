@@ -7,4 +7,4 @@ Simple video player
 
 
 # License
-[MIT License](https://github.com/blugon09/FlickView/blob/master/LICENSE.md)
+[MIT License](https://github.com/blugon09/FlickView/blob/master/LICENSE)

@@ -25,7 +25,7 @@ const createWindow = () => {
 app.whenReady().then(() => {
     createWindow()
     
-    require("./update")()
+    require("./update")(app, win)
 })
 
 ipcMain.on("load", function(event) {

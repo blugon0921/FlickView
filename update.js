@@ -4,23 +4,28 @@ const ProgressBar = require("electron-progressbar")
 const { autoUpdater } = require("electron-updater")
 autoUpdater.autoDownload = false
 
-module.exports = () => {
+module.exports = (app, win) => {
     autoUpdater.checkForUpdates()
     let progressBar
+    let isDownload = false
 
     autoUpdater.on("checking-for-update", () => {
         log.info("Checking Update...")
     })
     autoUpdater.on("update-available", (info) => {
         log.info("Update Available")
-        dialog.showMessageBox({
+        win.hide()
+        dialog.showMessageBox(win, {
             type: "info",
             title: "업데이트 확인",
             message: "새로운 업데이트가 있습니다. 지금 업데이트하시겠습니까?",
+            cancelId: 1,
             buttons: ["업데이트", "나중에"]
-        }, (buttonIndex) => {
-            if(buttonIndex === 0) {
+        }).then(result => {
+            if(result.response === 0) {
                 autoUpdater.downloadUpdate()
+            } else {
+                win.show()
             }
         })
     })
@@ -29,38 +34,55 @@ module.exports = () => {
     })
     autoUpdater.on("error", (err) => {
         log.info("Error in auto-updater. " + err)
-        dialog.showErrorBox("업데이트 오류", err == null ? "업데이트 중 오류가 발생했습니다." : err)
+        dialog.showErrorBox("Error: ", err == null ? "unknown" : (err.stack || err).toString())
+        win.show()
     })
-    autoUpdater.once("download-progress", (progressObj) => {
-        let log_message = "Download Speed: " + progressObj.bytesPerSecond
+    let once = false
+    autoUpdater.on("download-progress", (progressObj) => {
+        let log_message = `Download Speed: ${progressObj.bytesPerSecond}bytes/s`
         log_message = log_message + " - Download: " + progressObj.percent + "%"
         log_message = log_message + " (" + progressObj.transferred + "/" + progressObj.total + ")"
         log.info(log_message)
+        isDownload = true
+        if(!once) {
+            progressBar = new ProgressBar({
+                indeterminate: false,
+                title: "업데이트 파일 다운로드중...",
+                detail: `업데이트 파일 다운로드중... ${Math.floor(progressObj.percent)}%}`,
+                maxValue: 100
+            }, app)
+        }
 
-        progressBar = new ProgressBar({
-            title: "업데이트중...",
-            detail: "업데이트중...",
-        })
+        progressBar.detail = `업데이트 파일 다운로드중... ${Math.floor(progressObj.percent)}%`
+        progressBar.value = Math.floor(progressObj.percent*10)/10
 
-        progressBar.on("completed", () => {
-            progressBar.title = "업데이트 완료!"
-            progressBar.detail = "업데이트 완료!"
-        }).on("aborted", () => {
-            console.log("중단됨...")
-        })
+        if(!once) {
+            progressBar.on("completed", () => {
+                progressBar.setCompleted()
+            }).on("aborted", () => {
+                log.info("Aborted")
+            })
+        }
+        once = true
     })
     autoUpdater.on("update-downloaded", (info) => {
-        progressBar.setCompleted()
+        if(!isDownload) {
+            win.show()
+            return
+        }
         log.info("Update complete")
 
-        dialog.showMessageBox({
+        dialog.showMessageBox(win, {
             type: "info",
             title: "업데이트 설치",
-            message: "업데이트가 완료되었습니다. 지금 다시시작 하시겠습니까?",
+            message: "업데이트 파일 다운로드가 완료되었습니다. 지금 업데이트 하시겠습니까?",
+            cancelId: 1,
             buttons: ["확인", "취소"]
-        }, (buttonIndex) => {
-            if(buttonIndex === 0) {
+        }).then(result => {
+            if(result.response === 0) {
                 autoUpdater.quitAndInstall(false, true)
+            } else {
+                win.show()
             }
         })
     })

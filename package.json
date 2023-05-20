@@ -61,7 +61,7 @@
       "language": 1042,
       "installerIcon": "build/icon.ico",
       "shortcutName": "Flick View",
-      "artifactName": "Flick View-${version}.${ext}",
+      "artifactName": "Flick-View-${version}.${ext}",
       "uninstallDisplayName": "Flick View"
     },
     "directories": {

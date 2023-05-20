@@ -33,7 +33,6 @@ ipcMain.on("load", function(event) {
     if(process.platform == "win32" && process.argv.length >= 2) {
         filePath = process.argv[1]
     }
-    // filePath = `C:\\CodingFile\\NodeJs\\Electron\\FlickView\\onimai.mp4`
     // filePath = `C:\\Users\\blugo\\Videos\\お兄ちゃんはおしまい！ OP.mp4`
     event.sender.send("file", filePath)
 })
@@ -58,6 +57,7 @@ ipcMain.on("selectVideo", (event, args) => {
                 "mp4",
                 "m4v",
                 "avi",
+                "mkv",
             ]},
             { name: "모든 파일", extensions: ["*"]}
         ]

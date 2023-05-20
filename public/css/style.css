@@ -1,0 +1,64 @@
+@font-face {
+    font-family: "PretendardJP";
+    src: url("../PretendardJP-Regular.ttf");
+}
+
+html,
+body {
+    height: 100%;
+    font-family: "PretendardJP";
+}
+
+* {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+*:focus {
+    outline: none;
+}
+
+body {
+    background-color: #2d2d2d;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    overflow: hidden;
+}
+
+#version {
+    position: fixed;
+    color: white;
+    top: 0;
+    left: 0;
+    margin: 1vw;
+    font-size: 1.5vw;
+}
+
+/* Video */
+
+#videoDiv {
+    position: fixed;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #212121;
+}
+
+video {
+    width: 100%;
+    height: 100%;
+}
+
+/* 팝업 배경 */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 3;
+}

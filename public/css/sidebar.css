@@ -1,0 +1,57 @@
+/* 사이드바 */
+#resize {
+    width: 0.25%;
+    height: 100%;
+    background-color: #6e6e6e;
+    cursor: ew-resize;
+}
+
+#sidebar {
+    background-color: #4a4a4a;
+    border-top: 0.25vw #222222 solid;
+    box-sizing: border-box;
+    width: 20%;
+    color: white;
+    pointer-events: all;
+    /* transition: 0.3s; */
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#sidebar::-webkit-scrollbar {
+    width: 0.5vw;
+}
+#sidebar::-webkit-scrollbar-thumb {
+    background-color: #a8a8a8;
+    border-radius: 1vw;
+}
+#sidebar::-webkit-scrollbar-track {
+    background-color: #4a4a4a00;
+    border-radius: 1vw;
+}
+
+.listvideo {
+    width: 100%;
+    background-color: #363636;
+    padding: 1vw;
+    cursor: pointer;
+    transition: 0.3s;
+    border-bottom: 0.25vw #222222 solid;
+}
+
+.listvideo:hover {
+    transform: translateX(-0.5vw);
+    transition: 0.3s;
+}
+
+.listvideo.nowPlaying {
+    background-color: #3b6e90;
+    border-bottom: 0.25vw #172027 solid;
+    transition: 0.3s;
+}
+
+.listvideoText {
+    margin: 0;
+    font-size: 1vw;
+    white-space: nowrap;
+}

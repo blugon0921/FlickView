@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./css/help.css">
+    <link rel="stylesheet" href="./css/openVideo.css">
+    <link rel="stylesheet" href="./css/seek.css">
+    <link rel="stylesheet" href="./css/sidebar.css">
+    <link rel="stylesheet" href="./css/style.css">
+
+    <title>FlickView</title>
+</head>
+
+<body data-volume="0.5" style="margin: 0;">
+    <div id="dropBox">
+        <h1>드래그 앤 드롭</h1>
+        <h1>OR</h1><br>
+        <button id="select">클릭하여 업로드</button>
+        <!-- <label for="input">클릭하여 업로드</label>
+        <input id="input" type="file" accept="video/*" style="margin-left: 5em;" name="input"> -->
+        <h4 id="version">1.0.7</h4>
+    </div>
+    
+    <div id="helpBG" class="background">
+        <div id="help">
+            <div id="center">
+                <span>Ctrl+Q 도움말</span>
+                <span>Ctrl+O 파일 열기</span>
+                <span>Ctrl+F 전체화면</span>
+                <span>Ctrl+← 배속-0.1</span>
+                <span>Ctrl+→ 배속+0.1</span>
+                <span>Ctrl+Shift+← 배속-1</span>
+                <span>Ctrl+Shift+→ 배속+1</span>
+                <span>Ctrl+P PIP모드</span>
+                <span>Ctrl+S 사이드바 열기</span>
+                <span>ESC 영상 종료</span>
+            </div>
+        </div>
+    </div>
+    <div id="seek" class=" background">
+        <div id="rewind">
+            <img src="./icons/rewind.png" class="seekImg">
+            <h1 id="rewindText" class="seekText">5s</h1>
+        </div>
+        <div id="wind">
+            <img src="./icons/wind.png" class="seekImg">
+            <h1 id="windText" class="seekText">5s</h1>
+        </div>
+        <div id="speedUp">
+            <img src="./icons/speedUp.png" class="seekImg">
+            <h1 id="speedUpText" class="seekText speedText">5배</h1>
+        </div>
+        <div id="speedDown">
+            <img src="./icons/speedDown.png" class="seekImg">
+            <h1 id="speedDownText" class="seekText speedText">5배</h1>
+        </div>
+    </div>
+
+
+
+    <!-- <div id="control">
+        <div id="left">
+            <button id="play" onclick="play()"><img id="playIcon" alt="play" src="./icons/play.png"></img></button>
+            <p id="current">00:00:00 / 00:00:00</p>
+        </div>
+        <div id="right">
+            <button id="audioButton" onclick="mute()"><img id="audioIcon" alt="audio" src="./icons/audio_big.png"></img></button>
+            <input id="audio" type="range" min="0" max="100" value="50">
+        </div>
+    </div> -->
+
+    <!-- <script src="https://kit.fontawesome.com/d15e16ea14.js" crossorigin="anonymous"></script> -->
+    <script type="module" src="./js/changeSpeed.js"></script>
+    <script type="module" src="./js/easteregg.js"></script>
+    <script type="module" src="./js/hotkey.js"></script>
+    <script type="module" src="./js/renderer.js"></script>
+    <script type="module" src="./js/script.js"></script>
+    <script type="module" src="./js/sidebar.js"></script>
+</body>
+
+</html>

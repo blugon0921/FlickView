@@ -1,15 +1,18 @@
 const { dialog } = require("electron")
 const log = require("electron-log")
 const ProgressBar = require("electron-progressbar")
+const { autoUpdater } = require("electron-updater")
+autoUpdater.autoDownload = false
 
 module.exports = (autoUpdater) => {
+    autoUpdater.checkForUpdates()
     let progressBar
 
     autoUpdater.on("checking-for-update", () => {
-        log.info("업데이트 확인 중...")
+        log.info("Checking Update...")
     })
     autoUpdater.on("update-available", (info) => {
-        log.info("새로운 업데이트가 있습니다.")
+        log.info("Update Available")
         dialog.showMessageBox({
             type: "info",
             title: "업데이트 확인",
@@ -22,15 +25,15 @@ module.exports = (autoUpdater) => {
         })
     })
     autoUpdater.on("update-not-available", (info) => {
-        log.info("최신 버전입니다.")
+        log.info("This is the latest version")
     })
     autoUpdater.on("error", (err) => {
-        log.info("업데이트 중 오류가 발생했습니다.")
+        log.info("Error in auto-updater. " + err)
         dialog.showErrorBox("업데이트 오류", err == null ? "업데이트 중 오류가 발생했습니다." : err)
     })
     autoUpdater.once("download-progress", (progressObj) => {
-        let log_message = "다운로드 속도: " + progressObj.bytesPerSecond
-        log_message = log_message + " - 다운로드: " + progressObj.percent + "%"
+        let log_message = "Download Speed: " + progressObj.bytesPerSecond
+        log_message = log_message + " - Download: " + progressObj.percent + "%"
         log_message = log_message + " (" + progressObj.transferred + "/" + progressObj.total + ")"
         log.info(log_message)
 
@@ -40,6 +43,7 @@ module.exports = (autoUpdater) => {
         })
 
         progressBar.on("completed", () => {
+            progressBar.title = "업데이트 완료!"
             progressBar.detail = "업데이트 완료!"
         }).on("aborted", () => {
             console.log("중단됨...")
@@ -47,8 +51,8 @@ module.exports = (autoUpdater) => {
     })
     autoUpdater.on("update-downloaded", (info) => {
         progressBar.setCompleted()
-        log.info("업데이트가 다운로드되었습니다.")
-    
+        log.info("Update complete")
+
         dialog.showMessageBox({
             type: "info",
             title: "업데이트 설치",

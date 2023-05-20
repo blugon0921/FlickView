@@ -2,7 +2,6 @@ const { app, BrowserWindow, ipcMain, Menu, dialog } = require("electron")
 const fs = require("fs")
 const path = require("path")
 const mime = require("mime")
-const { autoUpdater } = require("electron-updater")
 
 Menu.setApplicationMenu(false)
 let win
@@ -25,9 +24,8 @@ const createWindow = () => {
 
 app.whenReady().then(() => {
     createWindow()
-
-    autoUpdater.checkForUpdates()
-    require("./update")(autoUpdater)
+    
+    require("./update")()
 })
 
 ipcMain.on("load", function(event) {

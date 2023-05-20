@@ -36,24 +36,6 @@
       "releaseType": "release"
     },
     "asar": true,
-    "files": {
-      "filter": [
-        "**/*",
-        "build",
-        "build/**/*",
-        "node_modules",
-        "node_modules/**/*",
-        "src",
-        "src/**/*",
-        "package-lock.json",
-        "package.json",
-        "!LICENSE",
-        "!.gitignore",
-        "!README.md",
-        "!dist/",
-        "!dist/**/*"
-      ]
-    },
     "mac": {
       "target": [
         "default"

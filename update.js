@@ -4,7 +4,7 @@ const ProgressBar = require("electron-progressbar")
 const { autoUpdater } = require("electron-updater")
 autoUpdater.autoDownload = false
 
-module.exports = (autoUpdater) => {
+module.exports = () => {
     autoUpdater.checkForUpdates()
     let progressBar
 

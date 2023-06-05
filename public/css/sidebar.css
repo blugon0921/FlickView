@@ -1,14 +1,14 @@
 /* 사이드바 */
 #resize {
-    width: 0.25%;
-    height: 100%;
+    min-width: 0.25%;
+    min-height: 100%;
     background-color: #6e6e6e;
     cursor: ew-resize;
 }
 
 #sidebar {
     background-color: #4a4a4a;
-    border-top: 0.25vw #222222 solid;
+    border-top: 0.2vw #262626 solid;
     box-sizing: border-box;
     width: 20%;
     color: white;
@@ -36,7 +36,7 @@
     padding: 1vw;
     cursor: pointer;
     transition: 0.3s;
-    border-bottom: 0.25vw #222222 solid;
+    border-bottom: 0.2vw #262626 solid;
 }
 
 .listvideo:hover {
@@ -45,8 +45,8 @@
 }
 
 .listvideo.nowPlaying {
-    background-color: #3b6e90;
-    border-bottom: 0.25vw #172027 solid;
+    background-color: #00B2FF;
+    border-bottom: 0.2vw #202d37 solid;
     transition: 0.3s;
 }
 
@@ -54,4 +54,9 @@
     margin: 0;
     font-size: 1vw;
     white-space: nowrap;
+    text-shadow: -0.1vw 0px #4e4e4e, 0px 0.1vw #4e4e4e, 0.1vw 0px #4e4e4e, 0px -0.1vw #4e4e4e;
+}
+
+.listvideo.nowPlaying .listvideoText {
+    text-shadow: -0.1vw 0px #2366a9, 0px 0.1vw #2366a9, 0.1vw 0px #2366a9, 0px -0.1vw #2366a9;
 }

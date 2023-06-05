@@ -1,26 +1,26 @@
-import { sidebar } from "./sidebar.js"
-
 let helpPause = false
 
 document.body.addEventListener("keydown", (event) => {
     const video = document.getElementById("video")
-    const isOpenHelp = document.getElementById("help").style.transform.includes("1, 1")
+    const isOpenHelp = document.getElementById("help").style.pointerEvents === "all"
 
     if(event.ctrlKey) { //Ctrl
         if(event.key === "q") { //Ctrl + Q
             const help = document.getElementById("help")
             const helpCenter = document.getElementById("center")
-            if(isOpenHelp) {
-                help.style.transform = "scale(1, 0)"
-                helpCenter.style.transform = "scale(0, 0)"
+            if(isOpenHelp) { //Close Help
+                help.style.cssText = ""
+                helpCenter.style.cssText = ""
                 if(!video) return
                 if(helpPause) {
                     video.play()
                     helpPause = false
                 }
-            } else {
-                help.style.transform = "scale(1, 1)"
+            } else { //Open Help
+                help.style.backgroundColor = "rgba(0, 0, 0, 0.4)"
+                help.style.pointerEvents = "all"
                 helpCenter.style.transform = "scale(1, 1)"
+                helpCenter.style.opacity = "1"
                 if(video) {
                     helpPause = true
                     if(video.paused) helpPause = false
@@ -51,7 +51,7 @@ document.body.addEventListener("keydown", (event) => {
 
         //사이드바
         if(event.key === "s") { //Ctrl + S
-            sidebar()
+            global.sidebarToggle()
         }
     }
 

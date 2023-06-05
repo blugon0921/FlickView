@@ -1,6 +1,6 @@
 {
   "name": "flickview",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "Simple video player for Windows",
   "main": "app.js",
   "scripts": {
@@ -54,8 +54,8 @@
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true,
-      "createDesktopShortcut": true,
+      "allowToChangeInstallationDirectory": false,
+      "createDesktopShortcut": false,
       "perMachine": true,
       "language": 1042,
       "installerIcon": "build/icon.ico",

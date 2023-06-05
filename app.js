@@ -1,17 +1,28 @@
-const { app, BrowserWindow, ipcMain, Menu, dialog } = require("electron")
+const { app, BrowserWindow, ipcMain, Menu, dialog, contextBridge } = require("electron")
 const fs = require("fs")
 const path = require("path")
 const mime = require("mime")
 
+const isFirst = app.requestSingleInstanceLock()
+if(!isFirst) {
+    app.quit()
+    return
+} else {
+    app.on("second-instance", (workingDirectory, argv, additionalData) => {
+        createWindow(argv, 2)
+    })
+}
+
 Menu.setApplicationMenu(false)
-let win
-const createWindow = () => {
-    win = new BrowserWindow({
+const windows = {}
+function createWindow(argv, openIndex) {
+    const win = new BrowserWindow({
         width: 1547,
         height: 900,
         minWidth: 600,
         minHeight: 369,
         center: true,
+        show: false,
         icon: `${__dirname}/build/icon.png`,
         webPreferences: {
             nodeIntegration: true,
@@ -20,26 +31,36 @@ const createWindow = () => {
     })
 
     win.loadFile(`${__dirname}/public/index.html`)
+    win.webContents.once("did-finish-load", () => {
+        win.show()
+        windows[Object.keys(windows).length] = {
+            window: win,
+            argv: argv,
+            openIndex: openIndex
+        }
+        if(process.platform == "win32" && 2 <= argv.length) {
+            win.webContents.send("file", argv[openIndex])
+        }
+    })
 }
 
 app.whenReady().then(() => {
-    createWindow()
-    
-    require("./update")(app, win)
-})
 
-ipcMain.on("load", function(event) {
-    let filePath = null
-    if(process.platform == "win32" && process.argv.length >= 2) {
-        filePath = process.argv[1]
+    if (BrowserWindow.getAllWindows().length === 0) {
+        createWindow(process.argv, 1)
     }
-    // filePath = `C:\\Users\\blugo\\Videos\\お兄ちゃんはおしまい！ OP.mp4`
-    event.sender.send("file", filePath)
+    require("./update")(app, windows[0])
 })
- 
-app.on("window-all-closed", () => {
-    if (process.platform !== "darwin") app.quit()
-})
+// ipcMain.on("load", (event, arg) => {
+//     const id = arg
+//     const window = windows[id]
+//     let filePath = null
+//     if(process.platform == "win32" && 2 <= window.argv.length) {
+//         filePath = window.argv[window.openIndex]
+//     }
+//     // filePath = `C:\\Users\\blugo\\Videos\\お兄ちゃんはおしまい！ OP.mp4`
+//     event.sender.send("file", filePath)
+// })
 
 ipcMain.on("selectVideo", (event, args) => {
     dialog.showOpenDialog({
@@ -84,4 +105,8 @@ ipcMain.on("pathVideos", (event, args) => {
     })
 
     event.sender.send("pathVideos", videoList)
+})
+    
+app.on("window-all-closed", () => {
+    if (process.platform !== "darwin") app.quit()
 })

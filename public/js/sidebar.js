@@ -20,7 +20,15 @@ global.resizeSideBar = () => {
     const sidebar = document.getElementById("sidebar")
     const resizeElement = [ resize, video, sidebar]
 
-    resize.addEventListener("mousedown", () => {
+
+    /*
+    0: 좌클릭
+    1: 휠클릭
+    2: 우클릭
+    3: 아래쪽 마우스 버튼
+    4: 위쪽 마우스 버튼
+    */
+    resize.addEventListener("mousedown", (event) => {
         isClicked = true
     })
 

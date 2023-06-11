@@ -1,4 +1,4 @@
-const { app, BrowserWindow, ipcMain, Menu, dialog, contextBridge } = require("electron")
+const { app, BrowserWindow, ipcMain, Menu, dialog, contextBridge, clipboard } = require("electron")
 const fs = require("fs")
 const path = require("path")
 const mime = require("mime")
@@ -51,16 +51,6 @@ app.whenReady().then(() => {
     }
     require("./update")(app, windows[0])
 })
-// ipcMain.on("load", (event, arg) => {
-//     const id = arg
-//     const window = windows[id]
-//     let filePath = null
-//     if(process.platform == "win32" && 2 <= window.argv.length) {
-//         filePath = window.argv[window.openIndex]
-//     }
-//     // filePath = `C:\\Users\\blugo\\Videos\\お兄ちゃんはおしまい！ OP.mp4`
-//     event.sender.send("file", filePath)
-// })
 
 ipcMain.on("selectVideo", (event, args) => {
     dialog.showOpenDialog({
@@ -106,6 +96,8 @@ ipcMain.on("pathVideos", (event, args) => {
 
     event.sender.send("pathVideos", videoList)
 })
+
+require("./contextMenu/screenshot")()
     
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit()

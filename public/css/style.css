@@ -62,3 +62,15 @@ video {
     pointer-events: none;
     z-index: 3;
 }
+
+
+#alert {
+    position: fixed;
+    top: 10vh;
+    z-index: 10;
+    color: white;
+    width: 100vw;
+    text-align: center;
+    font-size: 2vw;
+    text-shadow: -0.1vw 0px #282828, 0px 0.1vw #282828, 0.1vw 0px #282828, 0px -0.1vw #282828;
+}

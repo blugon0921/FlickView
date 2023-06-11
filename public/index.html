@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./css/seek.css">
     <link rel="stylesheet" href="./css/sidebar.css">
     <link rel="stylesheet" href="./css/style.css">
+    <link rel="stylesheet" href="./css/contextMenu.css">
 
     <title>Flick View</title>
 </head>
@@ -20,12 +21,20 @@
         <button id="select">클릭하여 업로드</button>
         <!-- <label for="input">클릭하여 업로드</label>
         <input id="input" type="file" accept="video/*" style="margin-left: 5em;" name="input"> -->
-        <h4 id="version">1.0.8</h4>
+        <h4 id="version">1.1.0</h4>
     </div>
+
+    <div id="contextMenu">
+        <button class="contextMenuItem takePictureSave">현재 화면 파일로 저장</button>
+        <button class="contextMenuItem takePictureCopy">현재 화면 클립보드에 복사</button>
+        <button class="contextMenuItem openScreenshotFolder">스크린샷 폴더 열기</button>
+    </div>
+
+    <h5 id="alert"></h5>
     
     <div id="helpBG" class="background">
         <div id="help">
-            <div id="center">
+            <div class="center">
                 <span>Ctrl+Q 도움말</span>
                 <span>Ctrl+O 파일 열기</span>
                 <span>Ctrl+F 전체화면</span>
@@ -39,6 +48,7 @@
             </div>
         </div>
     </div>
+    
     <div id="seek" class=" background">
         <div id="rewind">
             <img src="./icons/rewind.png" class="seekImg">
@@ -78,6 +88,7 @@
     <script src="./js/hotkey.js"></script>
     <script src="./js/renderer.js"></script>
     <script src="./js/sidebar.js"></script>
+    <script src="./js/contextMenu.js"></script>
 </body>
 
 </html>

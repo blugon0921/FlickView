@@ -1,20 +1,19 @@
 const { ipcRenderer } = require("electron")
 
+const body = document.body
 setInterval(() => {
     if(document.getElementById("video")) {
         document.body.dataset.volume = document.getElementById("video").volume
     }
     if(document.activeElement === document.getElementById("video")) document.getElementById("video").blur()
-    if(document.activeElement.tagName !== "BODY") {
-        document.body.focus()
-    }
+    if(document.activeElement === document.getElementById("select")) document.getElementById("select").blur()
+    body.focus()
 }, 1)
 
 document.getElementById("select").addEventListener("click", () => {
     ipcRenderer.send("selectVideo")
 })
 
-const body = document.body
 let dropBox = document.getElementById("dropBox")
 
 body.addEventListener("drop", (event) => {

@@ -33,6 +33,9 @@ function createWindow(argv, openIndex) {
     win.loadFile(`${__dirname}/public/index.html`)
     win.webContents.once("did-finish-load", () => {
         win.show()
+        if(windows.length === 0) {
+            require("./update")(app, win)
+        }
         windows[Object.keys(windows).length] = {
             window: win,
             argv: argv,
@@ -49,7 +52,6 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow(process.argv, 1)
     }
-    require("./update")(app, windows[0])
 })
 
 ipcMain.on("selectVideo", (event, args) => {

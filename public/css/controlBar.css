@@ -1,0 +1,114 @@
+#control {
+    position: absolute;
+    bottom: 0;
+    width: 77.875%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    background: linear-gradient(to top, black, #00000000);
+    transition: 0.2s;
+    opacity: 0;
+    pointer-events: none;
+}
+
+#control .top {
+    display: flex;
+    justify-content: space-between;
+}
+
+#control .top div {
+    display: flex;
+    align-items: center;
+    width: 50%;
+    height: 100%;
+}
+#control .top .left * {
+    margin-left: 1vw;
+}
+#control .top .right {
+    justify-content: flex-end;
+}
+#control .top .right * {
+    margin-right: 1vw;
+}
+
+#control .bottom {
+    height: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#currentBar {
+    width: 97%;
+    height: 10%;
+    height: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+#currentBarInput {
+    width: 97%;
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+#currentBar .current {
+    width: 0%;
+    height: 100%;
+    background-color: #3673b9;
+    border-top-left-radius: 100em;
+    border-bottom-left-radius: 100em;
+}
+#currentBar .remaining {
+    width: 100%;
+    height: 100%;
+    background-color: #b5b5b5;
+    border-top-right-radius: 100em;
+    border-bottom-right-radius: 100em;
+}
+
+.controlIcon {
+    background-color: #00000000;
+    width: 25px;
+    height: 25px;
+    background-size: cover;
+    border-radius: 0;
+    padding: 0;
+}
+
+.controlIcon img {
+    width: 100%;
+    height: 100%;
+}
+
+#play.paused {
+    background-image: url("../images/play.png");
+}
+#play {
+    background-image: url("../images/pause.png");
+}
+
+#volumeBtn[data-shape="none"] {
+    background-image: url("../images/volume-none.png");
+}
+#volumeBtn[data-shape="off"] {
+    background-image: url("../images/volume-off.png");
+}
+#volumeBtn[data-shape="low"] {
+    background-image: url("../images/volume-low.png");
+}
+#volumeBtn[data-shape="hight"] {
+    background-image: url("../images/volume-high.png");
+}
+#volume {
+    cursor: pointer;
+}
+
+#currentTime {
+    color: white;
+    font-weight: 600;
+    text-align: center;
+}

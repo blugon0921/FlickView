@@ -7,7 +7,7 @@ document.body.addEventListener("keydown", (event) => {
     if(event.ctrlKey) { //Ctrl
         if(event.key === "q") { //Ctrl + Q
             const help = document.getElementById("help")
-            const helpCenter = document.getElementById("center")
+            const helpCenter = help.children[0]
             if(isOpenHelp) { //Close Help
                 help.style.cssText = ""
                 helpCenter.style.cssText = ""

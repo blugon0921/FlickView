@@ -6,22 +6,32 @@
     <link rel="stylesheet" href="./css/help.css">
     <link rel="stylesheet" href="./css/openVideo.css">
     <link rel="stylesheet" href="./css/seek.css">
+    <!-- <link rel="stylesheet" href="./css/settings.css"> -->
     <link rel="stylesheet" href="./css/sidebar.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/contextMenu.css">
+    <link rel="stylesheet" href="./css/controlBar.css">
 
     <title>Flick View</title>
 </head>
 
 <body data-volume="0.5" style="margin: 0;">
+    <!-- <div id="settings">
+        <div class="center">
+            <div class="side">
+                <button>출력</button>
+            </div>
+            <div class="main">
+                <input type="text">
+            </div>
+        </div>
+    </div> -->
     <div id="dropBox">
+        <h4 id="version">1.2.0</h4>
         <h1>드래그 앤 드롭</h1>
         <h1>OR</h1><br>
-        <!-- <button id="select" onclick="alert('Test')">클릭하여 업로드</button> -->
         <button id="select">클릭하여 업로드</button>
-        <!-- <label for="input">클릭하여 업로드</label>
-        <input id="input" type="file" accept="video/*" style="margin-left: 5em;" name="input"> -->
-        <h4 id="version">1.1.0</h4>
+        <!-- <button class="settingsBtn"><img src="./images/settings.png" class="settingsImg"></button> -->
     </div>
 
     <div id="contextMenu">
@@ -49,46 +59,34 @@
         </div>
     </div>
     
-    <div id="seek" class=" background">
+    <div id="seek" class="background">
         <div id="rewind">
-            <img src="./icons/rewind.png" class="seekImg">
+            <img src="./images/rewind.png" class="seekImg">
             <h1 id="rewindText" class="seekText">5s</h1>
         </div>
         <div id="wind">
-            <img src="./icons/wind.png" class="seekImg">
+            <img src="./images/wind.png" class="seekImg">
             <h1 id="windText" class="seekText">5s</h1>
         </div>
         <div id="speedUp">
-            <img src="./icons/speedUp.png" class="seekImg">
+            <img src="./images/speedUp.png" class="seekImg">
             <h1 id="speedUpText" class="seekText speedText">5배</h1>
         </div>
         <div id="speedDown">
-            <img src="./icons/speedDown.png" class="seekImg">
+            <img src="./images/speedDown.png" class="seekImg">
             <h1 id="speedDownText" class="seekText speedText">5배</h1>
         </div>
     </div>
 
-
-
-    <!-- <div id="control">
-        <div id="left">
-            <button id="play" onclick="play()"><img id="playIcon" alt="play" src="./icons/play.png"></img></button>
-            <p id="current">00:00:00 / 00:00:00</p>
-        </div>
-        <div id="right">
-            <button id="audioButton" onclick="mute()"><img id="audioIcon" alt="audio" src="./icons/audio_big.png"></img></button>
-            <input id="audio" type="range" min="0" max="100" value="50">
-        </div>
-    </div> -->
-
-    <!-- <script src="https://kit.fontawesome.com/d15e16ea14.js" crossorigin="anonymous"></script> -->
-    <script src="./js/script.js"></script>
     <script src="./js/changeSpeed.js"></script>
     <script src="./js/easteregg.js"></script>
     <script src="./js/hotkey.js"></script>
     <script src="./js/renderer.js"></script>
     <script src="./js/sidebar.js"></script>
     <script src="./js/contextMenu.js"></script>
+    <script src="./js/settings.js"></script>
+    <script src="./js/controlBar.js"></script>
+    <script src="./js/script.js"></script>
 </body>
 
 </html>

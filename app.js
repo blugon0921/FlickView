@@ -13,7 +13,7 @@ if(!isFirst) {
     })
 }
 
-Menu.setApplicationMenu(false)
+// Menu.setApplicationMenu(false)
 const windows = {}
 function createWindow(argv, openIndex) {
     const win = new BrowserWindow({
@@ -84,20 +84,7 @@ ipcMain.on("selectVideo", (event, args) => {
     })
 })
 
-ipcMain.on("pathVideos", (event, args) => {
-    const path = args[0]
-    // console.log(path)
-    const videos = fs.readdirSync(path).filter(file => String(mime.getType(file)).startsWith("video"))
-    const videoList = []
-    videos.forEach(video => {
-        videoList.unshift({
-            name: video,
-            path: `${path}\\${video}`
-        })
-    })
-
-    event.sender.send("pathVideos", videoList)
-})
+require("./openVideo")()
 
 require("./contextMenu/screenshot")()
     

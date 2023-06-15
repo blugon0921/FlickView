@@ -34,11 +34,33 @@ global.playVideo = (path) => {
     console.log(fileName)
 
     const video = `
-        <div id="videoDiv">
-            <video id="video" autoplay controls poster="" preload="auto">
-                <source src="${path}">
-                video.mp4
-            </video>
+        <div id="videoScene">
+            <div id="videoBox">
+                <video id="video" autoplay poster="" preload="auto">
+                    <source src="${path}">
+                    video.mp4
+                </video>
+                    
+                <div id="control">
+                    <div class="top">
+                        <div class="left">
+                            <button id="play" class="controlIcon"></button>
+                            <span id="currentTime">00:00:00 / 00:00:00</span>
+                        </div>
+                        <div class="right">
+                            <button id="volumeBtn" class="controlIcon"></button>
+                            <input id="volume" type="range" min="0" max="100" value="50">
+                        </div>
+                    </div>
+                    <div class="bottom">
+                        <div id="currentBar">
+                            <input id="currentBarInput" type="range" min="0" max="1000" value="0">
+                            <div class="current"></div>
+                            <div class="remaining"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div id="resize"></div>
             <div id="sidebar"></div>
         </div>
@@ -58,9 +80,9 @@ global.playVideo = (path) => {
 
 global.endVideo = () => {
     const fs = require("fs")
-    if(document.getElementById("videoDiv")) {
+    if(document.getElementById("videoScene")) {
         global.volume(document.getElementById("video").volume)
-        document.getElementById("videoDiv").remove()
+        document.getElementById("videoScene").remove()
         document.title = "Flick View"
         fs.closeSync(fs.openSync(document.body.dataset.path, "r"))
         document.body.dataset.video = ""

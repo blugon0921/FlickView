@@ -3,7 +3,7 @@ const maxSize = 50
 const resizeWidth = 0.25
 
 global.sidebarToggle = (bool) => {
-    const video = document.getElementById("video")
+    const video = document.getElementById("videoBox")
     if(!video) return
     // const sidebar = document.getElementById("sidebar")
     video.style.transition = "0.3s"
@@ -16,7 +16,7 @@ global.sidebarToggle = (bool) => {
 let isClicked = false
 global.resizeSideBar = () => {
     const resize = document.getElementById("resize")
-    const video = document.getElementById("video")
+    const video = document.getElementById("videoBox")
     const sidebar = document.getElementById("sidebar")
     const resizeElement = [ resize, video, sidebar]
 
@@ -58,7 +58,7 @@ global.resizeSideBar = () => {
 }
 
 global.setSidebarWidth = (width) => {
-    const video = document.getElementById("video")
+    const video = document.getElementById("videoBox")
     const sidebar = document.getElementById("sidebar")
     if(!video) return
     if(global.storageSidebar().isopen) {
@@ -75,6 +75,7 @@ global.setSidebarWidth = (width) => {
         document.getElementById("resize").style.minWidth = `0%`
     }
     document.getElementById("seek").style.width = `${video.style.minWidth}`
+    document.getElementById("control").style.width = `${video.style.minWidth}`
 }
 
 global.storageSidebar = (isopen, width) => {
@@ -97,16 +98,23 @@ global.storageSidebar = (isopen, width) => {
 if(!global.storageSidebar()) {
     global.storageSidebar(false, minSize)
 }
-setInterval(() => {
+global.sideBarRepeat = () => {
     global.setSidebarWidth(global.storageSidebar().width)
-}, 1)
+}
+
 ipcRenderer.on("pathVideos", (event, args) => {
     const videos = args
     videos.forEach(video => {
         const sidebarElement = document.getElementById("sidebar")
         const nowPlaying = document.body.dataset.video === video.name ? "nowPlaying" : ""
+        // const element = `
+        //     <div data-path="${video.path}" data-name="${video.name}" class="listvideo ${nowPlaying}">
+        //         <img class="thumbnail">
+        //         <h5 class="listvideoText">${video.name}</h5>
+        //     </div>
+        // `
         const element = `
-            <div data-path="${video.path}" class="listvideo ${nowPlaying}">
+            <div data-path="${video.path}" data-name="${video.name}" class="listvideo ${nowPlaying}">
                 <h5 class="listvideoText">${video.name}</h5>
             </div>
         `
@@ -124,4 +132,12 @@ ipcRenderer.on("pathVideos", (event, args) => {
     })
 })
 
-// export { sidebar, resize, global.storageSidebar }
+ipcRenderer.on("setThumbnail", (event, args) => {
+    const name = args[0]
+    const thumbnail = args[1]
+    Array.from(document.getElementsByClassName("listvideo")).forEach(element => {
+        if(element.dataset.name !== name) return
+        console.log(thumbnail)
+        element.children[0].src = thumbnail
+    })
+})

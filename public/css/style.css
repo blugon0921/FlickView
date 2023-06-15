@@ -37,7 +37,7 @@ body {
 
 /* Video */
 
-#videoDiv {
+#videoScene {
     position: fixed;
     z-index: 1;
     width: 100%;

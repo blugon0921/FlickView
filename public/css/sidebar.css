@@ -52,6 +52,7 @@
 
 .listvideoText {
     margin: 0;
+    margin-top: 0.5vh;
     font-size: 1vw;
     white-space: nowrap;
     text-shadow: -0.1vw 0px #4e4e4e, 0px 0.1vw #4e4e4e, 0.1vw 0px #4e4e4e, 0px -0.1vw #4e4e4e;
@@ -59,4 +60,10 @@
 
 .listvideo.nowPlaying .listvideoText {
     text-shadow: -0.1vw 0px #2366a9, 0px 0.1vw #2366a9, 0.1vw 0px #2366a9, 0px -0.1vw #2366a9;
+}
+
+.thumbnail {
+    height: 10vh;
+    border-radius: 10px;
+    pointer-events: none;
 }

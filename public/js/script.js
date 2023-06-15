@@ -1,10 +1,7 @@
-const { ipcRenderer } = require("electron")
-
 const body = document.body
 setInterval(() => {
-    if(document.getElementById("video")) {
-        document.body.dataset.volume = document.getElementById("video").volume
-    }
+    global.controlBar.interval()
+    global.sideBarRepeat()
     if(document.activeElement === document.getElementById("video")) document.getElementById("video").blur()
     if(document.activeElement === document.getElementById("select")) document.getElementById("select").blur()
     body.focus()
@@ -92,6 +89,7 @@ body.addEventListener("keydown", (event) => {
         second = rewindSeconds
     }
     if(!iskeydown) return
+    global.controlHideTime = 1000
     timeout.forEach(timeout => clearTimeout(timeout))
     text.innerText = `${second}s`
     element.style.opacity = `0`
@@ -109,13 +107,13 @@ body.addEventListener("keydown", (event) => {
 })
 
 function existVideo() {
-    if(document.getElementById("videoDiv")) return true
+    if(document.getElementById("videoScene")) return true
     return false
 }
 
 global.volume = (volume) => {
     if(volume === undefined) {
-        return document.body.dataset.volume
+        return Number(document.body.dataset.volume)
     } else {
         document.getElementById("video").volume = volume
         document.body.dataset.volume = volume

@@ -13,7 +13,7 @@ if(!isFirst) {
     })
 }
 
-// Menu.setApplicationMenu(false)
+Menu.setApplicationMenu(false)
 const windows = {}
 function createWindow(argv, openIndex) {
     const win = new BrowserWindow({

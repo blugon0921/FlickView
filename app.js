@@ -33,9 +33,6 @@ function createWindow(argv, openIndex) {
     win.loadFile(`${__dirname}/public/index.html`)
     win.webContents.once("did-finish-load", () => {
         win.show()
-        if(windows.length === 0) {
-            require("./update")(app, win)
-        }
         windows[Object.keys(windows).length] = {
             window: win,
             argv: argv,
@@ -45,12 +42,12 @@ function createWindow(argv, openIndex) {
             win.webContents.send("file", argv[openIndex])
         }
     })
+    return win
 }
 
 app.whenReady().then(() => {
-
     if (BrowserWindow.getAllWindows().length === 0) {
-        createWindow(process.argv, 1)
+        require("./update")(app, createWindow(process.argv, 1))
     }
 })
 

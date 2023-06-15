@@ -115,7 +115,7 @@ global.volume = (volume) => {
     if(volume === undefined) {
         return Number(document.body.dataset.volume)
     } else {
-        document.getElementById("video").volume = volume
+        document.getElementById("volume").value = volume*100
         document.body.dataset.volume = volume
     }
 }

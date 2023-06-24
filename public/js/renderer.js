@@ -14,17 +14,34 @@ ipcRenderer.on("file", (event, arg) => {
     }
 })
 
+const videoExtensions = [
+    // "ogm",
+    // "wmv",
+    // "mpg",
+    "webm",
+    "ogv",
+    "mov",
+    // "asx",
+    // "mpeg",
+    "mp4",
+    "m4v",
+    // "avi",
+    "mkv",
+]
 global.playVideo = (path) => {
     const fs = require("fs")
     const mime = require("mime")
+    const Path = require("path")
 
     const fileName = path.split("\\")[path.split("\\").length-1]
     const filePath = path.split("\\").slice(0, path.split("\\").length-1).join("\\")
-    if(!mime.getType(fileName).startsWith("video")) {
+    // if(!mime.getType(fileName).startsWith("video")) {
+    if(!videoExtensions.includes(Path.extname(fileName).replace(".", ""))) {
         dropBox.classList.add("wrong")
         setTimeout(() => {
             dropBox.classList.remove("wrong")
         }, 300)
+        global.alert("재생할 수 있는 파일이 아닙니다", true)
         return
     }
     let scroll = 0

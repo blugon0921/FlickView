@@ -1,4 +1,5 @@
 const body = document.body
+
 setInterval(() => {
     global.controlBar.interval()
     global.sideBarRepeat()
@@ -105,6 +106,12 @@ body.addEventListener("keydown", (event) => {
         }, transition*1000/2)
     }, transition*1000/2))
 })
+body.addEventListener("keydown", (event) => {
+    if(!event.ctrlKey) return
+    if(event.key === "w") {
+        ipcRenderer.send("end")
+    }
+})
 
 function existVideo() {
     if(document.getElementById("videoScene")) return true
@@ -113,21 +120,32 @@ function existVideo() {
 
 global.volume = (volume) => {
     if(volume === undefined) {
-        return Number(document.body.dataset.volume)
+        if(localStorage.getItem("volume") === undefined || localStorage.getItem("volume") === null) localStorage.setItem("volume", "0.5")
+        return Number(localStorage.getItem("volume"))
     } else {
         document.getElementById("volume").value = volume*100
-        document.body.dataset.volume = volume
+        localStorage.setItem("volume", volume)
     }
 }
 
-global.storage = (key, value) => {
+global.storageObject = (key, value) => {
     if(typeof key !== "string") throw new Error("key는 string여야합니다")
     if(typeof value !== "object") throw new Error("value는 object여야합니다")
-    if(value === undefined) {
+    if(value === undefined || value === null) {
         return JSON.parse(localStorage.getItem(key))
     }
     if(!JSON.parse(localStorage.getItem(key))) localStorage.setItem(key, JSON.stringify({}))
     localStorage.setItem(key, JSON.stringify(value))
+}
+
+global.storage = (key, value) => {
+    if(typeof key !== "string") throw new Error("key는 string여야합니다")
+    // if(typeof value !== "object") throw new Error("value는 object여야합니다")
+    if(value === undefined) {
+        if(localStorage.getItem(key) === undefined || localStorage.getItem(key) === null) return undefined
+        return localStorage.getItem(key)
+    }
+    localStorage.setItem(key, value)
 }
 
 global.isOpenHelp = () => {

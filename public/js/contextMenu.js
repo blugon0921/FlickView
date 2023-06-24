@@ -44,23 +44,41 @@ function contextMenuClose() {
     contextMenu.style.zIndex = "-10"
 }
 
-
-ipcRenderer.on("pictureResult", (event, result) => {
+global.alert = (message, isError) => {
     const alert = document.getElementById("alert")
     alert.style.transition = "0s"
     setTimeout(() => {
         alert.style.opacity = 1
-        if(result.success) {
+        if(!isError) {
             alert.style.color = "white"
-            alert.innerText = result.message
+            alert.innerText = message
         } else {
             alert.style.color = "rgb(185, 77, 77)"
-            alert.innerText = result.message
-            console.log(result.error)
+            alert.innerText = message
         }
     }, 10)
     setTimeout(() => {
         alert.style.transition = "0.3s"
         alert.style.opacity = 0
     }, 1010)
+}
+ipcRenderer.on("pictureResult", (event, result) => {
+    global.alert(result.message, !result.success)
+    // const alert = document.getElementById("alert")
+    // alert.style.transition = "0s"
+    // setTimeout(() => {
+    //     alert.style.opacity = 1
+    //     if(result.success) {
+    //         alert.style.color = "white"
+    //         alert.innerText = result.message
+    //     } else {
+    //         alert.style.color = "rgb(185, 77, 77)"
+    //         alert.innerText = result.message
+    //         console.log(result.error)
+    //     }
+    // }, 10)
+    // setTimeout(() => {
+    //     alert.style.transition = "0.3s"
+    //     alert.style.opacity = 0
+    // }, 1010)
 })

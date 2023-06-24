@@ -3,6 +3,8 @@ const fs = require("fs")
 const mime = require("mime")
 const ffmpegPath = require("ffmpeg-static-electron").path.replace("app.asar", "app.asar.unpacked")
 const ffmpeg = require("fluent-ffmpeg")
+const { videoExtensions } = require("./app")
+const Path = require("path")
 ffmpeg.setFfmpegPath(ffmpegPath)
 
 const thubmnailFolder = `${process.env.APPDATA}/flickview/thumbnails`
@@ -11,7 +13,8 @@ module.exports = () => {
     ipcMain.on("pathVideos", (event, args) => {
         // clearThumbnails()
         const path = args[0]
-        const videos = fs.readdirSync(path).filter(file => String(mime.getType(file)).startsWith("video"))
+        // const videos = fs.readdirSync(path).filter(file => String(mime.getType(file)).startsWith("video"))
+        const videos = fs.readdirSync(path).filter(file => videoExtensions.includes(Path.extname(file).replace(".", "")))
         const videoList = []
         videos.forEach(video => {
             videoList.unshift({

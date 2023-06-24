@@ -4,6 +4,7 @@ const ffmpegPath = require("ffmpeg-static-electron").path.replace("app.asar", "a
 const ffmpeg = require("fluent-ffmpeg")
 ffmpeg.setFfmpegPath(ffmpegPath)
 
+const screenshotFolder = `${process.env.APPDATA}\\flickview\\screenshot`
 module.exports = () => {
     ipcMain.on("takePictureCopy", async (event, args) => {
         saveScreenshot(event, args, true, true)
@@ -14,17 +15,16 @@ module.exports = () => {
     })
 
     ipcMain.on("openScreenshotFolder", async (event, args) => {
-        shell.openExternal(`${process.env.APPDATA}/flickview/screenshot`)
+        shell.openPath(`${screenshotFolder}`)
     })
 
     async function saveScreenshot(event, args, isRemove, isCopy) {
-        const savePath = `${process.env.APPDATA}/flickview/screenshot`
-        if(!fs.existsSync(savePath)) fs.mkdirSync(savePath)
+        if(!fs.existsSync(screenshotFolder)) fs.mkdirSync(savePath)
         let saveName
         let number = -1
         while(true) {
             number++
-            if(fs.existsSync(`${savePath}/${args[0]}${isRemove? "_remove" : ""}_${number}.png`)) continue
+            if(fs.existsSync(`${screenshotFolder}/${args[0]}${isRemove? "_remove" : ""}_${number}.png`)) continue
             saveName = `${args[0]}${isRemove? "_remove" : ""}_${number}.png`
             break
         }
@@ -44,14 +44,14 @@ module.exports = () => {
     
         ffmpeg(videoPath).on("end", () => {
             if(isCopy) {
-                clipboard.writeImage(`${savePath}/${saveName}`)
+                clipboard.writeImage(`${screenshotFolder}/${saveName}`)
                 event.sender.send("pictureResult", {
                     success: true,
                     message: "현재 화면을 클립보드에 복사했습니다"
                 })
             }
             if(isRemove) {
-                fs.unlinkSync(`${savePath}/${saveName}`)
+                fs.unlinkSync(`${screenshotFolder}/${saveName}`)
             } else {
                 event.sender.send("pictureResult", {
                     success: true,

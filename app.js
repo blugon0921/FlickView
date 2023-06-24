@@ -13,6 +13,14 @@ if(!isFirst) {
     })
 }
 
+/*
+1.2.2
+
+볼륨 로컬 스토리지에 저장
+Ctrl+W로 종료
+재생할 수 없는 파일 처리
+*/
+
 Menu.setApplicationMenu(false)
 const windows = {}
 function createWindow(argv, openIndex) {
@@ -55,21 +63,8 @@ ipcMain.on("selectVideo", (event, args) => {
     dialog.showOpenDialog({
         properties: ["openFile"],
         filters: [
-            { name: "동영상 파일", extensions: [
-                "ogm",
-                "wmv",
-                "mpg",
-                "webm",
-                "ogv",
-                "mov",
-                "asx",
-                "mpeg",
-                "mp4",
-                "m4v",
-                "avi",
-                "mkv",
-            ]},
-            { name: "모든 파일", extensions: ["*"]}
+            { name: "동영상 파일", extensions: videoExtensions},
+            // { name: "모든 파일", extensions: ["*"]}
         ]
     }).then(result => {
         if (!result.canceled) {
@@ -81,10 +76,33 @@ ipcMain.on("selectVideo", (event, args) => {
     })
 })
 
-require("./openVideo")()
+ipcMain.on("end", (event, args) => {
+    event.sender.close()
+})
 
+
+//Context Menu
 require("./contextMenu/screenshot")()
-    
+
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit()
 })
+const videoExtensions = [
+    // "ogm",
+    // "wmv",
+    // "mpg",
+    "webm",
+    "ogv",
+    "mov",
+    // "asx",
+    // "mpeg",
+    "mp4",
+    "m4v",
+    // "avi",
+    "mkv",
+]
+module.exports = {
+    videoExtensions: videoExtensions
+}
+
+require("./openVideo")()

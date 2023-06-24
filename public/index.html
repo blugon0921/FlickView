@@ -6,7 +6,6 @@
     <link rel="stylesheet" href="./css/help.css">
     <link rel="stylesheet" href="./css/openVideo.css">
     <link rel="stylesheet" href="./css/seek.css">
-    <!-- <link rel="stylesheet" href="./css/settings.css"> -->
     <link rel="stylesheet" href="./css/sidebar.css">
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/contextMenu.css">
@@ -15,23 +14,12 @@
     <title>Flick View</title>
 </head>
 
-<body data-volume="0.5" style="margin: 0;">
-    <!-- <div id="settings">
-        <div class="center">
-            <div class="side">
-                <button>출력</button>
-            </div>
-            <div class="main">
-                <input type="text">
-            </div>
-        </div>
-    </div> -->
+<body style="margin: 0;">
     <div id="dropBox">
-        <h4 id="version">1.2.1</h4>
+        <h4 id="version">1.2.2</h4>
         <h1>드래그 앤 드롭</h1>
         <h1>OR</h1><br>
         <button id="select">클릭하여 업로드</button>
-        <!-- <button class="settingsBtn"><img src="./images/settings.png" class="settingsImg"></button> -->
     </div>
 
     <div id="contextMenu">
@@ -61,19 +49,19 @@
     
     <div id="seek" class="background">
         <div id="rewind">
-            <img src="./images/rewind.png" class="seekImg">
+            <img src="./images/rewind.png" class="seekImg" alt="rewind">
             <h1 id="rewindText" class="seekText">5s</h1>
         </div>
         <div id="wind">
-            <img src="./images/wind.png" class="seekImg">
+            <img src="./images/wind.png" class="seekImg" alt="wind">
             <h1 id="windText" class="seekText">5s</h1>
         </div>
         <div id="speedUp">
-            <img src="./images/speedUp.png" class="seekImg">
+            <img src="./images/speedUp.png" class="seekImg" alt="speedup">
             <h1 id="speedUpText" class="seekText speedText">5배</h1>
         </div>
         <div id="speedDown">
-            <img src="./images/speedDown.png" class="seekImg">
+            <img src="./images/speedDown.png" class="seekImg" alt="speeddown">
             <h1 id="speedDownText" class="seekText speedText">5배</h1>
         </div>
     </div>
@@ -84,7 +72,6 @@
     <script src="./js/renderer.js"></script>
     <script src="./js/sidebar.js"></script>
     <script src="./js/contextMenu.js"></script>
-    <script src="./js/settings.js"></script>
     <script src="./js/controlBar.js"></script>
     <script src="./js/script.js"></script>
 </body>

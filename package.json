@@ -1,6 +1,6 @@
 {
   "name": "flickview",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Simple video player for Windows",
   "main": "app.js",
   "scripts": {
@@ -68,6 +68,24 @@
     "directories": {
       "buildResources": "./build/",
       "output": "./dist/"
-    }
+    },
+    "fileAssociations": [{
+      "ext": [
+        "ogm",
+        "wmv",
+        "mpg",
+        "webm",
+        "ogv",
+        "mov",
+        "asx",
+        "mpeg",
+        "mp4",
+        "m4v",
+        "avi",
+        "mkv"
+      ],
+      "name": "Flick File",
+      "role": "Editor"
+    }]
   }
 }

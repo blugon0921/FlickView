@@ -20,21 +20,34 @@ module.exports = () => {
             videoList.unshift({
                 name: video,
                 path: `${path}\\${video}`,
-
+                // thubmnail: `${thubmnailFolder}\\${video}.png`
             })
         })
-        // videoList.forEach(video => {
-        //     saveThumbnail(event, video)
-        // })
         event.sender.send("pathVideos", videoList)
+        videoList.forEach(video => {
+            saveThumbnail(event, video)
+        })
+    })
+
+    ipcMain.on("clearThumbnail", (event, args) => {
+        const size = clearThumbnails()
+        let message = "동영상 미리보기 폴더를 비웠습니다"
+        if(size !== 0) message += `\n${Math.round(formatSize(size).formatedSize)} ${formatSize(size).format}`
+        event.sender.send("messageAlert", {
+            message: message,
+            isError: false
+        })
     })
 
     function clearThumbnails() {
         if(!fs.existsSync(thubmnailFolder)) fs.mkdirSync(thubmnailFolder)
         const thubmnails = fs.readdirSync(thubmnailFolder)
+        let size = 0
         thubmnails.forEach(file => {
+            size+=fileSize(`${thubmnailFolder}/${file}`)
             fs.unlinkSync(`${thubmnailFolder}/${file}`)
         })
+        return size
     }
 
     async function saveThumbnail(event, video) {
@@ -84,5 +97,22 @@ module.exports = () => {
                 resolve(metadata)
             })
         })
+    }
+
+    function fileSize(folderPath) {
+        var stats = fs.statSync(folderPath)
+        var fileSizeInBytes = stats.size
+        return fileSizeInBytes
+    }
+
+    function formatSize(size) {
+        const i = size == 0 ? 0 : Math.floor(Math.log(size) / Math.log(1024));
+        size = size / Math.pow(1024, i)
+        const fmt = size >= 100 ? size.toFixed(0) : size.toFixed(1)
+        return {
+            size: fmt.replace(".0", "") + ' ' + ['B', 'kB', 'MB', 'GB', 'TB'][i],
+            formatedSize: Number(fmt.replace(".0", "")),
+            format: ['B', 'kB', 'MB', 'GB', 'TB'][i]
+        }
     }
 }

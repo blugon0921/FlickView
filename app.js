@@ -14,11 +14,10 @@ if(!isFirst) {
 }
 
 /*
-1.2.2
+1.2.3
 
-볼륨 로컬 스토리지에 저장
-Ctrl+W로 종료
-재생할 수 없는 파일 처리
+사이드바 동영상 썸네일
+썸네일 폴더 비우기
 */
 
 Menu.setApplicationMenu(false)

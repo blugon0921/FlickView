@@ -151,3 +151,7 @@ global.storage = (key, value) => {
 global.isOpenHelp = () => {
     return document.getElementById("help").style.pointerEvents === "all"
 }
+
+ipcRenderer.on("messageAlert", (event, result) => {
+    global.alert(result.message, result.isError)
+})

@@ -137,7 +137,10 @@ ipcRenderer.on("setThumbnail", (event, args) => {
     const thumbnail = args[1]
     Array.from(document.getElementsByClassName("listvideo")).forEach(element => {
         if(element.dataset.name !== name) return
-        console.log(thumbnail)
-        element.children[0].src = thumbnail
+        // console.log(thumbnail)
+        const img = document.createElement("img")
+        img.className = "thumbnail"
+        img.src = thumbnail
+        element.prepend(img)
     })
 })

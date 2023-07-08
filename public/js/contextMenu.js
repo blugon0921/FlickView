@@ -15,6 +15,10 @@ document.body.addEventListener("mousedown", (event) => {
         if(event.target.classList.contains("openScreenshotFolder")) {
             ipcRenderer.send("openScreenshotFolder")
         }
+        //동영상 미리보기 폴더 비우기
+        if(event.target.classList.contains("clearThumbnail")) {
+            ipcRenderer.send("clearThumbnail")
+        }
     }
     contextMenuClose()
 })
@@ -62,23 +66,3 @@ global.alert = (message, isError) => {
         alert.style.opacity = 0
     }, 1010)
 }
-ipcRenderer.on("pictureResult", (event, result) => {
-    global.alert(result.message, !result.success)
-    // const alert = document.getElementById("alert")
-    // alert.style.transition = "0s"
-    // setTimeout(() => {
-    //     alert.style.opacity = 1
-    //     if(result.success) {
-    //         alert.style.color = "white"
-    //         alert.innerText = result.message
-    //     } else {
-    //         alert.style.color = "rgb(185, 77, 77)"
-    //         alert.innerText = result.message
-    //         console.log(result.error)
-    //     }
-    // }, 10)
-    // setTimeout(() => {
-    //     alert.style.transition = "0.3s"
-    //     alert.style.opacity = 0
-    // }, 1010)
-})

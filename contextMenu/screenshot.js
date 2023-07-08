@@ -19,7 +19,7 @@ module.exports = () => {
     })
 
     async function saveScreenshot(event, args, isRemove, isCopy) {
-        if(!fs.existsSync(screenshotFolder)) fs.mkdirSync(savePath)
+        if(!fs.existsSync(screenshotFolder)) fs.mkdirSync(screenshotFolder)
         let saveName
         let number = -1
         while(true) {
@@ -45,29 +45,29 @@ module.exports = () => {
         ffmpeg(videoPath).on("end", () => {
             if(isCopy) {
                 clipboard.writeImage(`${screenshotFolder}/${saveName}`)
-                event.sender.send("pictureResult", {
-                    success: true,
-                    message: "현재 화면을 클립보드에 복사했습니다"
+                event.sender.send("messageAlert", {
+                    message: "현재 화면을 클립보드에 복사했습니다",
+                    isError: false
                 })
             }
             if(isRemove) {
                 fs.unlinkSync(`${screenshotFolder}/${saveName}`)
             } else {
-                event.sender.send("pictureResult", {
-                    success: true,
-                    message: "현재 화면을 파일로 저장했습니다"
+                event.sender.send("messageAlert", {
+                    message: "현재 화면을 파일로 저장했습니다",
+                    isError: false
                 })
             }
         }).on("error", (err) => {
             console.error(err)
-            event.sender.send("pictureResult", {
-                success: false,
+            event.sender.send("messageAlert", {
                 message: "오류가 발생했습니다",
+                isError: false,
                 error: err
             })
         }).screenshots({
             count: 1,
-            folder: savePath,
+            folder: screenshotFolder,
             size: `${width}x${height}`,
             filename: saveName,
             timestamps: [currentTime]

@@ -10,11 +10,30 @@ ffmpeg.setFfmpegPath(ffmpegPath)
 const thubmnailFolder = `${process.env.APPDATA}/flickview/thumbnails`
 let count = 0
 module.exports = () => {
+    ipcMain.on("openVideo", async (event, args) => {
+        const path = args[0]
+        if(fs.existsSync(path)) {
+            const info = await asyncFfprobe(path)
+            let rFps
+            info.streams.forEach(stream => {
+                if (stream.codec_type === "video") rFps = stream.r_frame_rate.split("/")
+            }) 
+            const fps = rFps[0]/rFps[1]
+            event.sender.send("selectComplete", [path, fps])
+        } else {
+            event.sender.send("messageAlert", {
+                message: "영상이 변경되거나 삭제되었습니다",
+                isError: true
+            })
+            event.sender.send("removeSidebarItem", [path])
+        }
+    })
+
     ipcMain.on("pathVideos", (event, args) => {
         // clearThumbnails()
         const path = args[0]
         // const videos = fs.readdirSync(path).filter(file => String(mime.getType(file)).startsWith("video"))
-        const videos = fs.readdirSync(path).filter(file => videoExtensions.includes(Path.extname(file).replace(".", "")))
+        const videos = fs.readdirSync(path).filter(file => videoExtensions.includes(Path.extname(file).replace(".", "").toLowerCase()))
         const videoList = []
         videos.forEach(video => {
             videoList.unshift({

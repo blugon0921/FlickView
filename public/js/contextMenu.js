@@ -47,22 +47,3 @@ function contextMenuOpen(x, y) {
 function contextMenuClose() {
     contextMenu.style.zIndex = "-10"
 }
-
-global.alert = (message, isError) => {
-    const alert = document.getElementById("alert")
-    alert.style.transition = "0s"
-    setTimeout(() => {
-        alert.style.opacity = 1
-        if(!isError) {
-            alert.style.color = "white"
-            alert.innerText = message
-        } else {
-            alert.style.color = "rgb(185, 77, 77)"
-            alert.innerText = message
-        }
-    }, 10)
-    setTimeout(() => {
-        alert.style.transition = "0.3s"
-        alert.style.opacity = 0
-    }, 1010)
-}

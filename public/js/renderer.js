@@ -1,17 +1,16 @@
-let id
-
-ipcRenderer.on("set-id", (event, arg) => {
-    id = arg
-    console.log(`ID : ${id}`)
-    ipcRenderer.send("load", id)
-})
-
-
+//Play Video
 ipcRenderer.on("file", (event, arg) => {
     const file = arg
     if(file && file !== ".") {
         playVideo(file)
     }
+})
+
+//Play Video
+ipcRenderer.on("selectComplete", (event, args) => {
+    const path = args[0]
+    const fps = args[1]
+    global.playVideo(path, fps)
 })
 
 const videoExtensions = [
@@ -28,7 +27,7 @@ const videoExtensions = [
     // "avi",
     "mkv",
 ]
-global.playVideo = (path) => {
+global.playVideo = (path, fps) => {
     const fs = require("fs")
     const mime = require("mime")
     const Path = require("path")
@@ -36,7 +35,7 @@ global.playVideo = (path) => {
     const fileName = path.split("\\")[path.split("\\").length-1]
     const filePath = path.split("\\").slice(0, path.split("\\").length-1).join("\\")
     // if(!mime.getType(fileName).startsWith("video")) {
-    if(!videoExtensions.includes(Path.extname(fileName).replace(".", ""))) {
+    if(!videoExtensions.includes(Path.extname(fileName).replace(".", "").toLowerCase())) {
         dropBox.classList.add("wrong")
         setTimeout(() => {
             dropBox.classList.remove("wrong")
@@ -47,6 +46,8 @@ global.playVideo = (path) => {
     let scroll = 0
     if(document.getElementById("sidebar")) scroll = document.getElementById("sidebar").scrollTop
     endVideo()
+    global.fps = fps
+    console.log(fps)
     ipcRenderer.send("pathVideos", [ filePath ])
     console.log(fileName)
 
@@ -71,7 +72,7 @@ global.playVideo = (path) => {
                     </div>
                     <div class="bottom">
                         <div id="currentBar">
-                            <input id="currentBarInput" type="range" min="0" max="1000" value="0">
+                            <input id="currentBarInput" type="range" min="0" max="10000" value="0">
                             <div class="current"></div>
                             <div class="remaining"></div>
                         </div>

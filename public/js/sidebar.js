@@ -61,6 +61,15 @@ global.setSidebarWidth = (width) => {
     const video = document.getElementById("videoBox")
     const sidebar = document.getElementById("sidebar")
     if(!video) return
+    if(isFullScreen) {
+        document.getElementById("seek").style.width = `${video.style.minWidth}`
+        document.getElementById("control").style.width = `${video.style.minWidth}`
+        sidebar.style.minWidth = `0%`
+        document.getElementById("resize").style.minWidth = `0`
+        return
+    } else {
+        document.getElementById("resize").style.minWidth = ``
+    }
     if(global.storageSidebar().isopen) {
         video.style.transition = "0.3s"
         sidebar.style.transition = "0.3s"
@@ -100,21 +109,35 @@ if(!global.storageSidebar()) {
 }
 global.sideBarRepeat = () => {
     global.setSidebarWidth(global.storageSidebar().width)
+    if(global.id !== undefined) {
+        ipcRenderer.send("isFullScreen", [global.id])
+    }
 }
+
+let isFullScreen = false
+global.isFullScreen = false
+ipcRenderer.on("isFullScreen", (event, args) => {
+    isFullScreen = args[0]
+    global.isFullScreen = args[0]
+    if(args[0] === true && !document.getElementById("video")) {
+        ipcRenderer.send("fullScreen", [global.id])
+    }
+    if(!document.getElementById("video")) return
+    if(args[0] === true) {
+        document.getElementById("videoBox").style.minWidth = "100%"
+    }
+})
 
 ipcRenderer.on("pathVideos", (event, args) => {
     const videos = args
     videos.forEach(video => {
         const sidebarElement = document.getElementById("sidebar")
         const nowPlaying = document.body.dataset.video === video.name ? "nowPlaying" : ""
-        // const element = `
-        //     <div data-path="${video.path}" data-name="${video.name}" class="listvideo ${nowPlaying}">
-        //         <img class="thumbnail">
-        //         <h5 class="listvideoText">${video.name}</h5>
-        //     </div>
-        // `
         const element = `
             <div data-path="${video.path}" data-name="${video.name}" class="listvideo ${nowPlaying}">
+                <div style="height:10vh;">
+                    <img class="thumbnail" alt="thumbnail">
+                </div>
                 <h5 class="listvideoText">${video.name}</h5>
             </div>
         `
@@ -124,11 +147,19 @@ ipcRenderer.on("pathVideos", (event, args) => {
     })
     Array.from(document.getElementsByClassName("listvideo")).forEach(element => {
         element.addEventListener("click", event => {
-            let target = event.target
-            if(target.tagName !== "DIV") target = target.parentElement
-            const path = target.dataset.path
-            global.playVideo(path)
+            const path = element.dataset.path
+            ipcRenderer.send("openVideo", [ path ])
         })
+    })
+})
+
+ipcRenderer.on("removeSidebarItem", (event, args) => {
+    const path = args[0]
+    Array.from(document.getElementsByClassName("listvideo")).forEach(element => {
+        if(element.dataset.path === path) {
+            element.remove()
+            return
+        }
     })
 })
 
@@ -137,10 +168,6 @@ ipcRenderer.on("setThumbnail", (event, args) => {
     const thumbnail = args[1]
     Array.from(document.getElementsByClassName("listvideo")).forEach(element => {
         if(element.dataset.name !== name) return
-        // console.log(thumbnail)
-        const img = document.createElement("img")
-        img.className = "thumbnail"
-        img.src = thumbnail
-        element.prepend(img)
+        element.children[0].children[0].src = thumbnail
     })
 })

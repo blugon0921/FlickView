@@ -32,11 +32,17 @@ global.controlBar.interval = () => {
     }
     video.volume = controls.volume.value/100
 
-    if(global.controlHideTime === 0) controlBar.style.opacity = 0
-    else {
+    if(video.paused) {
+        global.controlHideTime = 4000
+    }
+    if(global.controlHideTime === 0) {
+        controlBar.style.opacity = 0
+        document.getElementById("videoBox").style.cursor = "none"
+    } else {
         controlBar.style.opacity = 1
         controlBar.style.pointerEvents = "all"
         global.controlHideTime-=10
+        document.getElementById("videoBox").style.cursor = "default"
     }
     if(video.classList.contains("addedControlBarEvents")) return
     video.classList.add("addedControlBarEvents")
@@ -55,9 +61,21 @@ global.controlBar.interval = () => {
         global.controlHideTime = 0
     })
     
+    let isAlreadyPaused = false
+    controls.currentBarInput.addEventListener("mousedown", (event) => {
+        const video = document.getElementById("video")
+        isAlreadyPaused = video.paused
+    })
     controls.currentBarInput.addEventListener("input", (event) => {
         const video = document.getElementById("video")
-        video.currentTime = (video.duration*(controls.currentBarInput.value/10))/100
+        video.currentTime = (video.duration*(controls.currentBarInput.value/100))/100
+        video.pause()
+    })
+    controls.currentBarInput.addEventListener("change", (event) => {
+        if(!isAlreadyPaused) video.play()
+    })
+    controls.currentBarInput.addEventListener("keydown", (event) => {
+        event.preventDefault()
     })
     
     controls.play.addEventListener("click", (event) => {

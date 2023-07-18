@@ -1,5 +1,3 @@
-const { ipcRenderer } = require("electron")
-
 changeSpeed()
 function changeSpeed() {
     let speedUpTimeouts = []

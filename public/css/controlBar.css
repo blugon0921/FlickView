@@ -2,7 +2,8 @@
     position: absolute;
     bottom: 0;
     width: 77.875%;
-    height: 10%;
+    /* height: 10%; */
+    height: 5rem;
     display: flex;
     justify-content: space-between;
     flex-direction: column;

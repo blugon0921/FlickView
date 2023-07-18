@@ -1,3 +1,8 @@
+ipcRenderer.on("setId", (event, args) => {
+    global.id = args[0]
+    console.log(args[0])
+})
+
 const body = document.body
 
 setInterval(() => {
@@ -20,7 +25,8 @@ body.addEventListener("drop", (event) => {
     if(!event.dataTransfer.files) return
     const file = event.dataTransfer.files[0]
     dropBox.classList.remove("active")
-    global.playVideo(file.path)
+    ipcRenderer.send("openVideo", [file.path])
+    // global.playVideo(file.path)
 })
 
 body.addEventListener("dragover", (e) => {
@@ -37,86 +43,22 @@ body.addEventListener("dragleave", (e) => {
     dropBox.classList.remove("active")
 })
 
-//Play Video
-ipcRenderer.on("selectComplete", (event, args) => {
-    const path = args[0]
-    global.playVideo(path)
-})
-
 
 body.addEventListener("keydown", (e) => {
-    if(e.key === "Escape") global.endVideo()
+    if(e.key === "Escape") {
+        if(!document.getElementById("video")) return
+        if(!global.isFullScreen) global.endVideo()
+        if(global.isFullScreen) ipcRenderer.send("fullScreen", [global.id])
+    }
 })
 
 
-//Wind
-let windSeconds = 0
-let rewindSeconds = 0
-let windTimeouts = []
-let rewindTimeouts = []
-const skipSec = 5
-const wind = document.getElementById("wind")
-const rewind = document.getElementById("rewind")
-body.addEventListener("keydown", (event) => {
-    if(!existVideo()) return
-    if(isOpenHelp()) return
-    if(event.ctrlKey) return
-    const video = document.getElementById("video")
-    const transition = 0.5
-    let iskeydown = false
-
-    let timeout
-    let element
-    let text
-    let second
-    if(event.key === "ArrowRight") {
-        iskeydown = true
-        event.preventDefault()
-        video.currentTime += skipSec
-        windSeconds += skipSec
-        timeout = windTimeouts
-        element = wind
-        text = document.getElementById("windText")
-        second = windSeconds
-    }
-    if(event.key === "ArrowLeft") {
-        iskeydown = true
-        event.preventDefault()
-        video.currentTime -= skipSec
-        rewindSeconds += skipSec
-        timeout = rewindTimeouts
-        element = rewind
-        text = document.getElementById("rewindText")
-        second = rewindSeconds
-    }
-    if(!iskeydown) return
-    global.controlHideTime = 1000
-    timeout.forEach(timeout => clearTimeout(timeout))
-    text.innerText = `${second}s`
-    element.style.opacity = `0`
-    element.style.transition = `${transition}s`
-    element.style.transform = `scale(1.4, 1.4)`
-    element.style.opacity = `1`
-    timeout.push(setTimeout(() => {
-        element.style.opacity = `0`
-        setTimeout(() => {
-            element.style.transform = `scale(1, 1)`
-            windSeconds = 0
-            rewindSeconds = 0
-        }, transition*1000/2)
-    }, transition*1000/2))
-})
-body.addEventListener("keydown", (event) => {
+body.addEventListener("keydown", (event) => { //Ctrl+W
     if(!event.ctrlKey) return
     if(event.key === "w") {
         ipcRenderer.send("end")
     }
 })
-
-function existVideo() {
-    if(document.getElementById("videoScene")) return true
-    return false
-}
 
 global.volume = (volume) => {
     if(volume === undefined) {
@@ -150,6 +92,25 @@ global.storage = (key, value) => {
 
 global.isOpenHelp = () => {
     return document.getElementById("help").style.pointerEvents === "all"
+}
+
+global.alert = (message, isError) => {
+    const alert = document.getElementById("alert")
+    alert.style.transition = "0s"
+    setTimeout(() => {
+        alert.style.opacity = 1
+        if(!isError) {
+            alert.style.color = "white"
+            alert.innerText = message
+        } else {
+            alert.style.color = "rgb(185, 77, 77)"
+            alert.innerText = message
+        }
+    }, 10)
+    setTimeout(() => {
+        alert.style.transition = "0.3s"
+        alert.style.opacity = 0
+    }, 1010)
 }
 
 ipcRenderer.on("messageAlert", (event, result) => {

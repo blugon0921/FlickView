@@ -45,12 +45,12 @@ document.body.addEventListener("keydown", (event) => {
         //전체화면
         if(event.key === "f") { //Ctrl + F
             if(!video) return
-            if(video !== document.fullscreenElement) video.requestFullscreen()
-            else document.exitFullscreen()
+            ipcRenderer.send("fullScreen", [global.id])
         }
 
         //사이드바
         if(event.key === "s") { //Ctrl + S
+            if(global.isFullScreen) return
             global.sidebarToggle()
         }
     }

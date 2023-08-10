@@ -10,13 +10,14 @@
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/contextMenu.css">
     <link rel="stylesheet" href="./css/controlBar.css">
+    <link rel="stylesheet" href="./css/clip.css">
 
     <title>Flick View</title>
 </head>
 
 <body style="margin: 0;">
     <div id="dropBox">
-        <h4 id="version">1.2.4</h4>
+        <h4 id="version">1.2.5</h4>
         <h1>드래그 앤 드롭</h1>
         <h1>OR</h1><br>
         <button id="select">클릭하여 업로드</button>
@@ -26,6 +27,7 @@
         <button class="contextMenuItem takePictureSave">현재 화면 파일로 저장</button>
         <button class="contextMenuItem takePictureCopy">현재 화면 클립보드에 복사</button>
         <button class="contextMenuItem openScreenshotFolder">스크린샷 폴더 열기</button>
+        <button class="contextMenuItem openClipFolder">클립 폴더 열기</button>
         <button class="contextMenuItem clearThumbnail">동영상 미리보기 폴더 비우기</button>
     </div>
 
@@ -43,8 +45,24 @@
                 <span>Ctrl+Shift+→ 배속+1</span>
                 <span>Ctrl+P PIP모드</span>
                 <span>Ctrl+S 사이드바 열기</span>
+                <span>Ctrl+C 클립 만들기</span>
                 <span>ESC 영상 종료</span>
             </div>
+        </div>
+    </div>
+
+    <div id="clipBG" class="background">
+        <div id="clip" style="transform: scale(0);">
+            <div class="topbar">
+                <h3>클립 만들기</h3>
+                <button id="offclip">×</button>
+            </div>
+            <div class="bottom">
+                <input id="time_start" class="clipinput" type="text" value="00:00"></input>
+                <span>-</span>
+                <input id="time_end" class="clipinput" type="text" value="00:00"></input>
+            </div>
+            <div style="width: 100%;text-align: right;"><button id="cutclip">만들기</button></div>
         </div>
     </div>
 
@@ -76,6 +94,7 @@
     <script src="./js/sidebar.js"></script>
     <script src="./js/contextMenu.js"></script>
     <script src="./js/controlBar.js"></script>
+    <script src="./js/clip.js"></script>
     <script src="./js/script.js"></script>
 </body>
 

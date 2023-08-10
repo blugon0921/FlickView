@@ -53,6 +53,12 @@ document.body.addEventListener("keydown", (event) => {
             if(global.isFullScreen) return
             global.sidebarToggle()
         }
+
+        //클립
+        if(event.key === "c") { //Ctrl + C
+            if(global.isFullScreen) return
+            global.clipMakeToggle()
+        }
     }
 
     if(!video) return

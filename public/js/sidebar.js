@@ -135,8 +135,8 @@ ipcRenderer.on("pathVideos", (event, args) => {
         const nowPlaying = document.body.dataset.video === video.name ? "nowPlaying" : ""
         const element = `
             <div data-path="${video.path}" data-name="${video.name}" class="listvideo ${nowPlaying}">
-                <div style="height:10vh;">
-                    <img class="thumbnail" alt="thumbnail">
+                <div style="height:10vh;display: flex;align-items: center;">
+                    <img class="thumbnail" alt="${video.name}">
                 </div>
                 <h5 class="listvideoText">${video.name}</h5>
             </div>

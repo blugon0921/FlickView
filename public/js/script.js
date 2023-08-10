@@ -110,7 +110,7 @@ global.alert = (message, isError) => {
     setTimeout(() => {
         alert.style.transition = "0.3s"
         alert.style.opacity = 0
-    }, 1010)
+    }, 1510)
 }
 
 ipcRenderer.on("messageAlert", (event, result) => {

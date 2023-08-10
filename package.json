@@ -1,6 +1,6 @@
 {
   "name": "flickview",
-  "version": "1.2.4",
+  "version": "1.2.5",
   "description": "Simple video player for Windows",
   "main": "app.js",
   "scripts": {

@@ -1,0 +1,55 @@
+#clipBG {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+}
+
+#clip {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #575757;
+    border-radius: 1rem;
+    padding: 2%;
+    padding-top: 0;
+    color: white;
+    pointer-events: all;
+    transition: 0.3s;
+}
+
+/* TopBar */
+#clip .topbar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+}
+#offclip {
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    font-weight: 100;
+    border-radius: 10px;
+}
+
+/* Bottom */
+#clip .bottom .clipinput {
+    background-color: #00000000;
+    border: solid white 2px;
+    border-radius: 5px;
+    padding: 0.5vw;
+    color: white;
+    font-weight: 600;
+    text-align: center;
+    width: 70px;
+}
+
+#cutclip {
+    font-size: 15px;
+    padding: 7px;
+    margin-top: 2vh;
+    border-radius: 10px;
+}

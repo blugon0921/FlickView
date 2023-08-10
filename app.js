@@ -17,11 +17,10 @@ if(!isFirst) {
 }
 
 /*
-1.2.4
+1.2.5
 
-프레임 단위 스킵
-사이드바 스크롤 위치 버그 수정
-동영상을 전체화면으로 재생할시 커스텀 UI가 적용되지 않는 문제 해결
+로딩되지 않은 미리보기의 메세지를 수정했습니다
+클립 생성 기능을 추가하였습니다
 */
 
 Menu.setApplicationMenu(false)
@@ -119,6 +118,9 @@ ipcMain.on("isFullScreen", (event, args) => {
 
 //Context Menu
 require("./contextMenu/screenshot")()
+
+//Etc
+require("./makeclip")()
 
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit()

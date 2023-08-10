@@ -15,6 +15,10 @@ document.body.addEventListener("mousedown", (event) => {
         if(event.target.classList.contains("openScreenshotFolder")) {
             ipcRenderer.send("openScreenshotFolder")
         }
+        //클립 폴더 열기
+        if(event.target.classList.contains("openClipFolder")) {
+            ipcRenderer.send("openClipFolder")
+        }
         //동영상 미리보기 폴더 비우기
         if(event.target.classList.contains("clearThumbnail")) {
             ipcRenderer.send("clearThumbnail")

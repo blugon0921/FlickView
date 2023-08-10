@@ -47,7 +47,6 @@ global.playVideo = (path, fps) => {
     if(document.getElementById("sidebar")) scroll = document.getElementById("sidebar").scrollTop
     endVideo()
     global.fps = fps
-    console.log(fps)
     ipcRenderer.send("pathVideos", [ filePath ])
     console.log(fileName)
 
@@ -99,6 +98,7 @@ global.playVideo = (path, fps) => {
 global.endVideo = () => {
     const fs = require("fs")
     if(document.getElementById("videoScene")) {
+        global.resetClip()
         global.volume(document.getElementById("video").volume)
         document.getElementById("videoScene").remove()
         document.title = "Flick View"
